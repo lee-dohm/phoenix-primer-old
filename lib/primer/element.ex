@@ -18,9 +18,22 @@ defmodule Primer.Element do
   "<div class=\"Foo test\">Content</div>"
   ```
   """
-  defmacro __using__(_options) do
+  defmacro __using__(options) do
+    tag = options[:tag] || :div
+
     quote do
-      @class __MODULE__ |> Module.split() |> List.last()
+      last_module_segment =
+        __MODULE__
+        |> Module.split()
+        |> List.last()
+
+      class =
+        last_module_segment
+        |> Macro.underscore()
+        |> String.replace("_", "-")
+        |> String.capitalize()
+
+      @class class
       @module_name_text __MODULE__ |> Module.split() |> Enum.join(".")
 
       use Phoenix.HTML
@@ -39,10 +52,10 @@ defmodule Primer.Element do
       @doc """
       Returns the HTML tag the framework expects for this element.
 
-      Tag: `:div`
+      Tag: `#{unquote(tag)}`
       """
       @spec tag :: atom()
-      def tag, do: :div
+      def tag, do: unquote(tag)
 
       @doc """
       Renders the `#{@module_name_text}` structure to a
