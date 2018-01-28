@@ -5,12 +5,14 @@ defmodule Primer do
   """
   import Phoenix.HTML.Safe, only: [to_iodata: 1]
 
-  elements = [
-    Primer.Box,
-    Primer.BoxHeader
-  ]
+  {:ok, files} = File.ls(Path.join(__DIR__, 'primer'))
 
-  Enum.each(elements, fn(element) ->
+  files
+  |> Enum.reject(&(&1 == "element.ex"))
+  |> Enum.map(&(Path.basename(&1, ".ex")))
+  |> Enum.map(&Macro.camelize/1)
+  |> Enum.map(&(String.to_atom("Elixir.Primer.#{&1}")))
+  |> Enum.each(fn(element) ->
     fn_name =
       element
       |> Module.split()
