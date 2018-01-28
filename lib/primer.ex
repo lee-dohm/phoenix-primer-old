@@ -6,7 +6,8 @@ defmodule Primer do
   import Phoenix.HTML.Safe, only: [to_iodata: 1]
 
   elements = [
-    Primer.Box
+    Primer.Box,
+    Primer.BoxHeader
   ]
 
   Enum.each(elements, fn(element) ->
@@ -47,11 +48,11 @@ defmodule Primer do
     def unquote(fn_name)(content, options) when is_list(options) do
       to_iodata(%unquote(element){content: content, options: options})
     end
-  end)
-end
 
-defimpl Phoenix.HTML.Safe, for: Primer.Box do
-  def to_iodata(%Primer.Box{} = box) do
-    Primer.Box.render(box)
-  end
+    defimpl Phoenix.HTML.Safe, for: element do
+      def to_iodata(%unquote(element){} = el) do
+        unquote(element).render(el)
+      end
+    end
+  end)
 end
