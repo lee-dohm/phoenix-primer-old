@@ -1,18 +1,6 @@
 defmodule Primer do
   @moduledoc """
-  Documentation for Primer.
+  Primer is a set of helper functions, data structures and utilities to make working with [GitHub's
+  Primer CSS framework](https://primer.github.io) simple.
   """
-
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Primer.hello
-      :world
-
-  """
-  def hello do
-    :world
-  end
 end
