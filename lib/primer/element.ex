@@ -33,7 +33,7 @@ defmodule Primer.Element do
         |> String.replace("_", "-")
         |> String.capitalize()
 
-      @class class
+      @class Primer.Utilities.css_class(__MODULE__)
       @module_name_text __MODULE__ |> Module.split() |> Enum.join(".")
 
       use Phoenix.HTML

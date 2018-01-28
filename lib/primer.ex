@@ -8,7 +8,7 @@ defmodule Primer do
   {:ok, files} = File.ls(Path.join(__DIR__, 'primer'))
 
   files
-  |> Enum.reject(&(&1 == "element.ex"))
+  |> Enum.reject(&(&1 in ["element.ex", "utilities.ex"]))
   |> Enum.map(&(Path.basename(&1, ".ex")))
   |> Enum.map(&Macro.camelize/1)
   |> Enum.map(&(String.to_atom("Elixir.Primer.#{&1}")))
@@ -57,27 +57,4 @@ defmodule Primer do
       end
     end
   end)
-
-  @doc """
-  Determines the Primer-style CSS class from the module.
-  """
-  def css_class(module) when is_atom(module) do
-    module
-    |> Module.split()
-    |> do_css_class()
-  end
-
-  def css_class(module) when is_binary(module) do
-    module
-    |> String.split(".")
-    |> do_css_class()
-  end
-
-  defp do_css_class(segments) do
-    segments
-    |> List.last()
-    |> Macro.underscore()
-    |> String.replace("_", "-")
-    |> String.capitalize()
-  end
 end
