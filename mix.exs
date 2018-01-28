@@ -13,7 +13,9 @@ defmodule PhoenixPrimer.MixProject do
       source_url: "https://github.com/lee-dohm/phoenix-primer",
 
       elixir: "~> 1.6",
+      elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
+
       deps: deps(),
       docs: docs()
     ]
@@ -58,4 +60,8 @@ defmodule PhoenixPrimer.MixProject do
       ]
     ]
   end
+
+  # Specifies which paths to compile per environment.
+  defp elixirc_paths(:test), do: ["lib", "test/support"]
+  defp elixirc_paths(_), do: ["lib"]
 end
