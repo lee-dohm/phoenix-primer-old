@@ -1,6 +1,6 @@
-defmodule PhoenixPrimer do
+defmodule Primer do
   @moduledoc """
-  Documentation for PhoenixPrimer.
+  Documentation for Primer.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule PhoenixPrimer do
 
   ## Examples
 
-      iex> PhoenixPrimer.hello
+      iex> Primer.hello
       :world
 
   """
