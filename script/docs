@@ -1,0 +1,35 @@
+#!/bin/sh
+
+# script/docs: Generate the project's documentation and optionally open it in the primary browser.
+
+set -e
+cd "$(dirname "$0")/.."
+
+options=()
+while test $# -gt 0
+do
+  case "$1" in
+    --open) open="1"
+      ;;
+    --test) test_env="1"
+      ;;
+    *) options+=("$1")
+      ;;
+  esac
+  shift
+done
+
+if [ -n "$test_env" ]; then
+  echo "==> Include test helper modules in documentation..."
+  export MIX_ENV="test"
+fi
+
+script/bootstrap
+
+echo "==> Generating documentation..."
+mix docs $options
+
+if [ -n "$open" ]; then
+  echo "==> Open documentation in primary browser..."
+  open doc/index.html
+fi
