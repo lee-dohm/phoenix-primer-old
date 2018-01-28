@@ -24,11 +24,17 @@ defmodule Primer.Utilities do
   end
 
   def css_modifier(module, modifier) do
-    css_class(module) <> "--#{modifier}"
+    css_class(module) <> "--#{dasherize(modifier)}"
   end
 
   def strip_modifiers(options, modifiers) do
     Enum.reduce(modifiers, options, fn(modifier, options) -> Keyword.delete(options, modifier) end)
+  end
+
+  def dasherize(text) do
+    text
+    |> to_string()
+    |> String.replace("_", "-")
   end
 
   defp do_css_class(segments) do

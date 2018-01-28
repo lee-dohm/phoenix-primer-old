@@ -1,12 +1,13 @@
 defmodule Primer.ElementCase do
   defmacro modifier_test(module, modifier) do
     quote do
-      test "modifier #{unquote(modifier)}" do
+      test "modifier :#{unquote(modifier)}" do
         class = unquote(module).class()
         tag = unquote(module).tag()
         rendered = render(%unquote(module){options: [{unquote(modifier), true}]})
+        modifier = Primer.Utilities.dasherize(unquote(modifier))
 
-        assert rendered == ~s{<#{tag} class="#{class} #{class}--#{unquote(modifier)}"></#{tag}>}
+        assert rendered == ~s{<#{tag} class="#{class} #{class}--#{modifier}"></#{tag}>}
       end
     end
   end
