@@ -1,3 +1,3 @@
 defmodule Primer.BoxTest do
-  use Primer.ElementCase, class: "Box", module: Primer.Box
+  use Primer.ElementCase, module: Primer.Box
 end

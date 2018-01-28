@@ -57,4 +57,27 @@ defmodule Primer do
       end
     end
   end)
+
+  @doc """
+  Determines the Primer-style CSS class from the module.
+  """
+  def css_class(module) when is_atom(module) do
+    module
+    |> Module.split()
+    |> do_css_class()
+  end
+
+  def css_class(module) when is_binary(module) do
+    module
+    |> String.split(".")
+    |> do_css_class()
+  end
+
+  defp do_css_class(segments) do
+    segments
+    |> List.last()
+    |> Macro.underscore()
+    |> String.replace("_", "-")
+    |> String.capitalize()
+  end
 end

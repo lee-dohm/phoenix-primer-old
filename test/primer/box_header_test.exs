@@ -1,3 +1,3 @@
 defmodule Primer.BoxHeaderTest do
-  use Primer.ElementCase, class: "Box-header", module: Primer.BoxHeader
+  use Primer.ElementCase, module: Primer.BoxHeader
 end

@@ -4,6 +4,7 @@ defmodule Primer.ElementCase do
 
     options =
       options
+      |> Keyword.update(:class, Primer.css_class(Macro.to_string(module)), &(&1))
       |> Keyword.update(:tag, :div, &(&1))
 
     quote do

@@ -1,3 +1,3 @@
 defmodule Primer.BoxFooterTest do
-  use Primer.ElementCase, class: "Box-footer", module: Primer.BoxFooter
+  use Primer.ElementCase, module: Primer.BoxFooter
 end
