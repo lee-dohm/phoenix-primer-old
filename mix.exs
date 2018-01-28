@@ -16,6 +16,7 @@ defmodule PhoenixPrimer.MixProject do
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
 
+      aliases: aliases(),
       deps: deps(),
       docs: docs()
     ]
@@ -24,6 +25,12 @@ defmodule PhoenixPrimer.MixProject do
   def application do
     [
       extra_applications: [:logger]
+    ]
+  end
+
+  defp aliases do
+    [
+      test: [&touch/1, "test"]
     ]
   end
 
@@ -64,4 +71,10 @@ defmodule PhoenixPrimer.MixProject do
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
+
+  # Touch the `primer.ex` file when building to pick up any new files in `lib/primer/`
+  defp touch(_) do
+    Mix.shell.info("==> Touch lib/primer.ex")
+    Mix.shell.cmd("touch lib/primer.ex")
+  end
 end
