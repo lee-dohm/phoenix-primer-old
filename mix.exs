@@ -27,6 +27,7 @@ defmodule PhoenixPrimer.MixProject do
 
   defp deps do
     [
+      {:phoenix_html, "~> 2.10"},
       {:cmark, "~> 0.7", only: [:dev, :test]},
       {:ex_doc, "~> 0.18", only: [:dev, :test], runtime: false},
       {:version_tasks, "~> 0.10", only: :dev}
