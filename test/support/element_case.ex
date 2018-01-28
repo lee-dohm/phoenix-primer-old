@@ -1,4 +1,16 @@
 defmodule Primer.ElementCase do
+  defmacro modifier_test(module, modifier) do
+    quote do
+      test "modifier #{unquote(modifier)}" do
+        class = unquote(module).class()
+        tag = unquote(module).tag()
+        rendered = render(%unquote(module){options: [{unquote(modifier), true}]})
+
+        assert rendered == ~s{<#{tag} class="#{class} #{class}--#{unquote(modifier)}"></#{tag}>}
+      end
+    end
+  end
+
   defmacro __using__(options) do
     {module, options} = Keyword.pop(options, :module)
 
@@ -10,6 +22,8 @@ defmodule Primer.ElementCase do
     quote do
       use Primer.Case, unquote(options)
       doctest unquote(module)
+
+      import Primer.ElementCase
 
       @moduletag unquote(options)
 
