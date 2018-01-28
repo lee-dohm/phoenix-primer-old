@@ -19,27 +19,17 @@ defmodule Primer.Element do
   ```
   """
   defmacro __using__(options) do
+    class = options[:class]
     tag = options[:tag] || :div
     modifiers = options[:modifiers] || []
 
     quote do
-      last_module_segment =
-        __MODULE__
-        |> Module.split()
-        |> List.last()
-
-      class =
-        last_module_segment
-        |> Macro.underscore()
-        |> String.replace("_", "-")
-        |> String.capitalize()
-
-      @class Primer.Utilities.css_class(__MODULE__)
-      @module_name_text __MODULE__ |> Module.split() |> Enum.join(".")
-
       use Phoenix.HTML
 
       alias Primer.Utilities
+
+      @class unquote(class) || Utilities.css_class(__MODULE__)
+      @module_name_text __MODULE__ |> Module.split() |> Enum.join(".")
 
       @type t :: %__MODULE__{content: Phoenix.HTML.unsafe(), options: Keyword.t()}
       defstruct(content: [], options: [])
@@ -66,7 +56,7 @@ defmodule Primer.Element do
       """
       @spec render(__MODULE__.t()) :: Phoenix.HTML.safe()
       def render(%__MODULE__{} = element) do
-        class = Utilities.css_class(__MODULE__, unquote(modifiers), element.options)
+        class = Utilities.modified_css_class(__MODULE__.class(), unquote(modifiers), element.options)
 
         options =
           element.options

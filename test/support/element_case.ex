@@ -14,10 +14,12 @@ defmodule Primer.ElementCase do
 
   defmacro __using__(options) do
     {module, options} = Keyword.pop(options, :module)
+    class = Primer.Utilities.css_class(Macro.to_string(module))
+    class = if options[:variant] == :downcase, do: String.downcase(class), else: class
 
     options =
       options
-      |> Keyword.update(:class, Primer.Utilities.css_class(Macro.to_string(module)), &(&1))
+      |> Keyword.update(:class, class, &(&1))
       |> Keyword.update(:tag, :div, &(&1))
 
     quote do

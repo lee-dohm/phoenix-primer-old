@@ -14,17 +14,17 @@ defmodule Primer.Utilities do
     |> do_css_class()
   end
 
-  def css_class(module, modifiers, options) do
+  def modified_css_class(base, modifiers, options) do
     modifier_classes =
       modifiers
       |> Enum.filter(fn(modifier) -> options[modifier] end)
-      |> Enum.map(&(css_modifier(module, &1)))
+      |> Enum.map(&(css_modifier(base, &1)))
 
-    Enum.join([css_class(module) | modifier_classes], " ")
+    Enum.join([base | modifier_classes], " ")
   end
 
-  def css_modifier(module, modifier) do
-    css_class(module) <> "--#{dasherize(modifier)}"
+  def css_modifier(base, modifier) do
+    "#{base}--#{dasherize(modifier)}"
   end
 
   def strip_modifiers(options, modifiers) do
