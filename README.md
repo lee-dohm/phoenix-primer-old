@@ -14,6 +14,15 @@ def deps do
 end
 ```
 
+### Installing the framework
+
+Additionally, you'll need to install the Primer CSS framework for use in your project. If you're using Phoenix v1.3+ you can execute the following commands from the root of your project:
+
+```sh
+cd assets
+npm install primer
+```
+
 ## License
 
 [MIT](LICENSE.md)
