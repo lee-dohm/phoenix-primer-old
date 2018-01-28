@@ -37,12 +37,12 @@ defmodule Primer.Element do
       def class, do: @class
 
       @doc """
-      Returns the HTML tag name the framework expects for this element.
+      Returns the HTML tag the framework expects for this element.
 
-      Tag name: `:div`
+      Tag: `:div`
       """
-      @spec tag_name :: atom()
-      def tag_name, do: :div
+      @spec tag :: atom()
+      def tag, do: :div
 
       @doc """
       Renders the `#{@module_name_text}` structure to a
@@ -52,10 +52,10 @@ defmodule Primer.Element do
       def render(%__MODULE__{} = element) do
         options = Keyword.update(element.options, :class, class(), &(class() <> " " <> &1))
 
-        content_tag tag_name(), element.content, options
+        content_tag tag(), element.content, options
       end
 
-      defoverridable [class: 0, render: 1, tag_name: 0]
+      defoverridable [class: 0, render: 1, tag: 0]
     end
   end
 end
