@@ -2,6 +2,10 @@
 
 A library to help make working with GitHub's Primer CSS framework simple.
 
+## 🚨 Experimental 🚨
+
+This is mostly an experiment in Elixir macro code generation. It is not intended for production use. You have been warned.
+
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed by adding `phoenix_primer` to your list of dependencies in `mix.exs`:
