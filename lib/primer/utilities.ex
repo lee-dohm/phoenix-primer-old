@@ -27,6 +27,10 @@ defmodule Primer.Utilities do
     css_class(module) <> "--#{modifier}"
   end
 
+  def strip_modifiers(options, modifiers) do
+    Enum.reduce(modifiers, options, fn(modifier, options) -> Keyword.delete(options, modifier) end)
+  end
+
   defp do_css_class(segments) do
     segments
     |> List.last()

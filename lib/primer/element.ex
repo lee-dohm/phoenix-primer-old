@@ -20,6 +20,7 @@ defmodule Primer.Element do
   """
   defmacro __using__(options) do
     tag = options[:tag] || :div
+    modifiers = options[:modifiers] || []
 
     quote do
       last_module_segment =
@@ -37,6 +38,8 @@ defmodule Primer.Element do
       @module_name_text __MODULE__ |> Module.split() |> Enum.join(".")
 
       use Phoenix.HTML
+
+      alias Primer.Utilities
 
       @type t :: %__MODULE__{content: Phoenix.HTML.unsafe(), options: Keyword.t()}
       defstruct(content: [], options: [])
@@ -63,10 +66,17 @@ defmodule Primer.Element do
       """
       @spec render(__MODULE__.t()) :: Phoenix.HTML.safe()
       def render(%__MODULE__{} = element) do
-        options = Keyword.update(element.options, :class, class(), &(class() <> " " <> &1))
+        class = Utilities.css_class(__MODULE__, unquote(modifiers), element.options)
+
+        options =
+          element.options
+          |> Utilities.strip_modifiers(unquote(modifiers))
+          |> Keyword.update(:class, class, &(class <> " " <> &1))
 
         content_tag tag(), element.content, options
       end
+
+      def modifiers, do: unquote(modifiers)
 
       defoverridable [class: 0, render: 1, tag: 0]
     end
