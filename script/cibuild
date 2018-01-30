@@ -10,13 +10,4 @@ export MIX_ENV="test"
 
 script/bootstrap
 
-echo "==> Setting up DB…"
-mix ecto.ci
-
-echo "==> App is now ready to go!"
-
-if [ -n "$TRAVIS" ]; then
-  mix test
-else
-  mix test
-fi
+mix test
