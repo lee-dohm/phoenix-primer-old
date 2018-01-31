@@ -1,4 +1,24 @@
 defmodule Primer.ElementCase do
+  def css_class(module_name, nil) do
+    module_name
+    |> css_class(:unchanged)
+    |> Macro.underscore()
+    |> String.replace("_", "-")
+    |> String.capitalize()
+  end
+
+  def css_class(module_name, :downcase) do
+    module_name
+    |> css_class(nil)
+    |> String.downcase()
+  end
+
+  def css_class(module_name, :unchanged) do
+    module_name
+    |> String.split(".")
+    |> List.last()
+  end
+
   defmacro modifier_test(module, modifier) do
     quote do
       test "modifier :#{unquote(modifier)}" do
@@ -14,8 +34,7 @@ defmodule Primer.ElementCase do
 
   defmacro __using__(options) do
     {module, options} = Keyword.pop(options, :module)
-    class = Primer.Utilities.css_class(Macro.to_string(module))
-    class = if options[:variant] == :downcase, do: String.downcase(class), else: class
+    class = css_class(Macro.to_string(module), options[:variant])
 
     options =
       options
