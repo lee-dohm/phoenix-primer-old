@@ -1,5 +1,8 @@
 # Phoenix Primer
 
+[![Travis](https://img.shields.io/travis/lee-dohm/staff-notes.svg)](https://travis-ci.org/lee-dohm/staff-notes)
+[![Ebert](https://ebertapp.io/github/lee-dohm/staff-notes.svg)](https://ebertapp.io/github/lee-dohm/staff-notes)
+
 A library to help make working with GitHub's Primer CSS framework simple.
 
 ## 🚨 Experimental 🚨
