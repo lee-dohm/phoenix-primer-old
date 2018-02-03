@@ -14,6 +14,25 @@ defmodule Primer.Utilities do
     |> do_css_class()
   end
 
+  @doc """
+  Creates a modifier CSS class from the base class and a modifier atom.
+  """
+  def css_modifier(base, modifier) do
+    "#{base}--#{dasherize(modifier)}"
+  end
+
+  @doc """
+  Creates a dash-case version of a standard snake-case atom.
+  """
+  def dasherize(atom) when is_atom(atom) do
+    atom
+    |> to_string()
+    |> String.replace("_", "-")
+  end
+
+  @doc """
+  Creates the full CSS class from the base class and the modifiers if present in `options`.
+  """
   def modified_css_class(base, modifiers, options) do
     modifier_classes =
       modifiers
@@ -23,18 +42,11 @@ defmodule Primer.Utilities do
     Enum.join([base | modifier_classes], " ")
   end
 
-  def css_modifier(base, modifier) do
-    "#{base}--#{dasherize(modifier)}"
-  end
-
+  @doc """
+  Removes the given modifiers from the list of options.
+  """
   def strip_modifiers(options, modifiers) do
     Enum.reduce(modifiers, options, fn(modifier, options) -> Keyword.delete(options, modifier) end)
-  end
-
-  def dasherize(text) do
-    text
-    |> to_string()
-    |> String.replace("_", "-")
   end
 
   defp do_css_class(segments) do
