@@ -3,6 +3,37 @@ defmodule Primer.Element do
   A module to make it easy to define new structure types that will render themselves within Phoenix
   templates.
 
+  A module that uses `Element` will have a struct with `content` and `options` members, and three
+  overridable functions:
+
+  * `class/0` -- Returns the CSS class used to indicate an element of this type
+  * `render/1` -- Renders the element based on the struct passed into it
+  * `tag/0` -- Returns the HTML tag to use to render this element (defaults to `div`)
+
+  ## Rendering
+
+  The default render function accepts a structure belonging to its module and returns the rendered
+  element based on the values in the structure. The basic element is formed by taking the output of
+  the `class/0` and `tag/0` functions, and the `content` field of the structure to create this:
+
+  ```html
+  <tag class="class">content</tag>
+  ```
+
+  So if we were to have a module that looks like this:
+
+  ```
+  defmodule Test.ModuleName do
+    use Primer.Element
+  end
+  ```
+
+  Then the default `render/1` function with an empty `Test.ModuleName` struct would output:
+
+  ```html
+  <div class="Module-name"></div>
+  ```
+
   ## Examples
 
   ```
